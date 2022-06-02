@@ -162,8 +162,12 @@ public class Application implements IApplication {
     }
 
     private static String getWorkspaceRoot() {
-        /* Look for the environment variable in the global environment variables */
-        String workspaceRoot = System.getenv().get("TRACING_SERVER_ROOT"); //$NON-NLS-1$
+        /* Look for -vmargs parameter and overwrite environment variable */
+        String workspaceRoot = System.getProperty("traceserver.root"); //$NON-NLS-1$
+        if (workspaceRoot == null) {
+            /* Look for the environment variable in the global environment variables */
+            workspaceRoot = System.getenv().get("TRACING_SERVER_ROOT"); //$NON-NLS-1$
+        }
         if (workspaceRoot == null) {
             /* Use the user's home directory */
             workspaceRoot = System.getProperty("user.home"); //$NON-NLS-1$
